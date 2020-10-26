@@ -19,6 +19,9 @@ def _cli_callable_from_params(params: List[str] = None) -> callable:
     if args.dump_log:
         return partial(api.dump_log_method, args.dump_log)
 
+    if args.init:
+        return api.init_method
+
     return lambda: None
 
 

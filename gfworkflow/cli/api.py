@@ -16,3 +16,7 @@ def clear_log_method():
 
 def dump_log_method(dst: Union[str, Path]):
     gfworkflow.dump_log(dst)
+
+
+def init_method():
+    pass
