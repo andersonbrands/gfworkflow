@@ -96,4 +96,4 @@ def test_cli_logger_name_matches_package_name():
 
 def test_cli_adds_console_handler_to_logger():
     cli()
-    assert logging.FileHandler in map(type, logger.handlers)
+    assert logging.StreamHandler in map(type, logger.handlers)
