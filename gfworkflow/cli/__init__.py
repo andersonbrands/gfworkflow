@@ -2,7 +2,7 @@ import logging
 from functools import partial
 from typing import List
 
-from gfworkflow import logger
+from gfworkflow import logger, logger_handler
 from gfworkflow.cli import api
 from gfworkflow.cli._arg_parse import Args
 
@@ -32,7 +32,7 @@ def _create_console_handler() -> logging.Handler:
 
 
 def cli(params: List[str] = None):
-    logger.addHandler(_create_console_handler())
-    cli_callable: callable = _cli_callable_from_params(params)
-    cli_callable()
+    with logger_handler(logger, _create_console_handler()):
+        cli_callable: callable = _cli_callable_from_params(params)
+        cli_callable()
     pass
