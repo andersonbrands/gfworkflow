@@ -2,7 +2,7 @@ from pathlib import Path
 from typing import Union
 
 import gfworkflow
-from gfworkflow import R, logger
+from gfworkflow import R, logger, core
 
 
 def version_method():
@@ -16,3 +16,7 @@ def clear_log_method():
 
 def dump_log_method(dst: Union[str, Path]):
     gfworkflow.dump_log(dst)
+
+
+def init_method():
+    core.init()

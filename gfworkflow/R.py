@@ -10,4 +10,6 @@ class path(base.path):
 
 
 class param(base.param):
+    init = '--init'
+    init_help = 'init git flow'
     pass

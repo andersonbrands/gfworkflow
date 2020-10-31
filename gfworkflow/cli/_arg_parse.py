@@ -30,6 +30,8 @@ class Args(object):
 
         parser.add_argument(R.param.clear_log, action='store_true', help=R.param.clear_log_help)
 
+        parser.add_argument(R.param.init, action='store_true', help=R.param.init_help)
+
         self._args: argparse.Namespace = parser.parse_args(args_list)
 
     @property
@@ -43,3 +45,7 @@ class Args(object):
     @property
     def clear_log(self) -> bool:
         return self._args.clear_log
+
+    @property
+    def init(self) -> bool:
+        return self._args.init

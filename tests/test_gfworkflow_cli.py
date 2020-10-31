@@ -9,7 +9,7 @@ import pytest
 
 from gfworkflow import R, logger
 from gfworkflow.cli import Args, _cli_callable_from_params, cli
-from gfworkflow.cli.api import version_method, clear_log_method, dump_log_method
+from gfworkflow.cli.api import version_method, clear_log_method, dump_log_method, init_method
 
 
 def test_unrecognized_arguments_raises_system_exit():
@@ -21,6 +21,7 @@ def test_unrecognized_arguments_raises_system_exit():
     ['--version'],
     ['--dump-log', '.'],
     ['--clear-log'],
+    ['--init']
 ])
 def test_expected_params(params: List[str]):
     assert Args(params)
@@ -47,6 +48,7 @@ def test_non_existing_dir_raises_argument_type_error(tmp_path_as_cwd):
     'params, param_property', (
         (['--version'], Args.version),
         (['--clear-log'], Args.clear_log),
+        (['--init'], Args.init),
     )
 )
 def test_args_boolean_param_property_is_true_when_param_in_args_list(params, param_property):
@@ -62,6 +64,7 @@ def test_args_version_is_false_when_version_is_not_in_args_list():
             (['--version'], version_method),
             (['--clear-log'], clear_log_method),
             (['--dump-log'], dump_log_method),
+            (['--init'], init_method),
     )
 )
 def test_cli_with_param_returns_cli_api_method(params, api_method):
@@ -91,6 +94,7 @@ def test_cli_logger_name_matches_package_name():
     assert logger.name == R.string.package_name
 
 
-def test_cli_adds_console_handler_to_logger():
-    cli()
-    assert logging.FileHandler in map(type, logger.handlers)
+def test_cli_uses_logger_handler():
+    with mock.patch('gfworkflow.cli.logger_handler') as logger_handler_:
+        cli()
+        logger_handler_.assert_called_once()
