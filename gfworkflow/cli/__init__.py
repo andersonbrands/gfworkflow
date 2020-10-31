@@ -22,6 +22,9 @@ def _cli_callable_from_params(params: List[str] = None) -> callable:
     if args.init:
         return api.init_method
 
+    if args.bump_version:
+        return partial(api.bump_version_method, args.bump_version)
+
     return lambda: None
 
 

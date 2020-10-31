@@ -12,4 +12,6 @@ class path(base.path):
 class param(base.param):
     init = '--init'
     init_help = 'init git flow'
+    bump_version = '--bump-version'
+    bump_version_help = 'bumps version'
     pass

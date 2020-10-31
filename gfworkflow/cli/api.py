@@ -20,3 +20,7 @@ def dump_log_method(dst: Union[str, Path]):
 
 def init_method():
     core.init()
+
+
+def bump_version_method(part: str):
+    core.bump_version(part)

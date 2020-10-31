@@ -1,7 +1,6 @@
 import argparse
-import logging
 from pathlib import Path
-from typing import List
+from typing import Any
 from unittest import mock
 from unittest.mock import Mock
 
@@ -9,67 +8,7 @@ import pytest
 
 from gfworkflow import R, logger
 from gfworkflow.cli import Args, _cli_callable_from_params, cli
-from gfworkflow.cli.api import version_method, clear_log_method, dump_log_method, init_method
-
-
-def test_unrecognized_arguments_raises_system_exit():
-    with pytest.raises(SystemExit):
-        Args(['--foo'])
-
-
-@pytest.mark.parametrize('params', [
-    ['--version'],
-    ['--dump-log', '.'],
-    ['--clear-log'],
-    ['--init']
-])
-def test_expected_params(params: List[str]):
-    assert Args(params)
-
-
-def test_args_dump_log_is_not_none_when_dump_log_dir_in_args_list():
-    params = ['--dump-log', '.']
-    assert Args(params).dump_log is not None
-
-
-def test_args_dump_log_defaults_to_cwd():
-    cwd: Path = Path()
-    params = ['--dump-log']
-    assert Args(params).dump_log == cwd
-
-
-def test_non_existing_dir_raises_argument_type_error(tmp_path_as_cwd):
-    with pytest.raises(SystemExit), pytest.raises(argparse.ArgumentTypeError):
-        params = ['--dump-log', 'non_existing_dir']
-        Args(params)
-
-
-@pytest.mark.parametrize(
-    'params, param_property', (
-        (['--version'], Args.version),
-        (['--clear-log'], Args.clear_log),
-        (['--init'], Args.init),
-    )
-)
-def test_args_boolean_param_property_is_true_when_param_in_args_list(params, param_property):
-    assert param_property.getter(Args(params))
-
-
-def test_args_version_is_false_when_version_is_not_in_args_list():
-    assert not Args([]).version
-
-
-@pytest.mark.parametrize(
-    'params, api_method', (
-            (['--version'], version_method),
-            (['--clear-log'], clear_log_method),
-            (['--dump-log'], dump_log_method),
-            (['--init'], init_method),
-    )
-)
-def test_cli_with_param_returns_cli_api_method(params, api_method):
-    callable_ = _cli_callable_from_params(params)
-    assert api_method == callable_ or api_method == callable_.func
+from gfworkflow.cli.api import version_method, clear_log_method, dump_log_method, init_method, bump_version_method
 
 
 def test_cli_callable_from_params_with_no_param_returns_working_callable():
@@ -98,3 +37,54 @@ def test_cli_uses_logger_handler():
     with mock.patch('gfworkflow.cli.logger_handler') as logger_handler_:
         cli()
         logger_handler_.assert_called_once()
+
+
+class TestArgs:
+    test_data = [
+        (['--version'], Args.version, version_method),
+        (['--clear-log'], Args.clear_log, clear_log_method),
+        (['--dump-log', '.'], Args.dump_log, dump_log_method),
+        (['--init'], Args.init, init_method),
+        (['--bump-version', 'minor'], Args.bump_version, bump_version_method),
+    ]
+
+    @pytest.mark.parametrize('params', map(lambda x: x[0], test_data))
+    def test_expected_params(self, params):
+        assert Args(params)
+
+    @pytest.mark.parametrize('params, param_property', map(lambda x: x[0:2], test_data))
+    def test_args_param_property_is_true_when_param_in_args_list(self, params, param_property):
+        args: Any = Args(params)
+        assert param_property.getter(args)
+
+    @pytest.mark.parametrize('params, api_method', map(lambda x: (x[0], x[2]), test_data))
+    def test_cli_with_param_returns_cli_api_method(self, params, api_method):
+        callable_ = _cli_callable_from_params(params)
+        assert api_method == callable_ or api_method == callable_.func
+
+    def test_unrecognized_arguments_raises_system_exit(self):
+        with pytest.raises(SystemExit):
+            Args(['--foo'])
+
+    def test_args_dump_log_is_not_none_when_dump_log_dir_in_args_list(self):
+        params = ['--dump-log', '.']
+        assert Args(params).dump_log is not None
+
+    def test_args_dump_log_defaults_to_cwd(self):
+        cwd: Path = Path()
+        params = ['--dump-log']
+        assert Args(params).dump_log == cwd
+
+    def test_non_existing_dir_raises_argument_type_error(self, tmp_path_as_cwd):
+        with pytest.raises(SystemExit), pytest.raises(argparse.ArgumentTypeError):
+            params = ['--dump-log', 'non_existing_dir']
+            Args(params)
+
+    def test_args_version_is_false_when_version_is_not_in_args_list(self):
+        assert not Args([]).version
+
+    @pytest.mark.parametrize('params', map(lambda x: x[0], test_data))
+    def test_cli_callable_from_params_returns_working_callable(self, params, tmp_path_as_cwd):
+        cli_callable = Mock(_cli_callable_from_params(params))
+        cli_callable()
+        cli_callable.assert_called_with()
