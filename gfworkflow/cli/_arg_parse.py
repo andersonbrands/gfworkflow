@@ -32,7 +32,7 @@ class Args(object):
 
         parser.add_argument(R.param.init, action='store_true', help=R.param.init_help)
 
-        parser.add_argument(R.param.bump_version, action='store_true', help=R.param.bump_version_help)
+        parser.add_argument(R.param.bump_version, metavar='part', help=R.param.bump_version_help)
 
         self._args: argparse.Namespace = parser.parse_args(args_list)
 

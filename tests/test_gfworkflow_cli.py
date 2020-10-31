@@ -45,7 +45,7 @@ class TestArgs:
         (['--clear-log'], Args.clear_log, clear_log_method),
         (['--dump-log', '.'], Args.dump_log, dump_log_method),
         (['--init'], Args.init, init_method),
-        (['--bump-version'], Args.bump_version, bump_version_method),
+        (['--bump-version', 'minor'], Args.bump_version, bump_version_method),
     ]
 
     @pytest.mark.parametrize('params', map(lambda x: x[0], test_data))
@@ -83,3 +83,8 @@ class TestArgs:
     def test_args_version_is_false_when_version_is_not_in_args_list(self):
         assert not Args([]).version
 
+    @pytest.mark.parametrize('params', map(lambda x: x[0], test_data))
+    def test_cli_callable_from_params_returns_working_callable(self, params, tmp_path_as_cwd):
+        cli_callable = Mock(_cli_callable_from_params(params))
+        cli_callable()
+        cli_callable.assert_called_with()

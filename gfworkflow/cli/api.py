@@ -22,5 +22,5 @@ def init_method():
     core.init()
 
 
-def bump_version_method():
-    pass
+def bump_version_method(part: str):
+    core.bump_version(part)
