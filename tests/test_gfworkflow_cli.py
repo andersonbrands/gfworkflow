@@ -8,7 +8,7 @@ import pytest
 
 from gfworkflow import R, logger
 from gfworkflow.cli import Args, _cli_callable_from_params, cli
-from gfworkflow.cli.api import version_method, clear_log_method, dump_log_method, init_method
+from gfworkflow.cli.api import version_method, clear_log_method, dump_log_method, init_method, bump_version_method
 
 
 def test_cli_callable_from_params_with_no_param_returns_working_callable():
@@ -45,6 +45,7 @@ class TestArgs:
         (['--clear-log'], Args.clear_log, clear_log_method),
         (['--dump-log', '.'], Args.dump_log, dump_log_method),
         (['--init'], Args.init, init_method),
+        (['--bump-version'], Args.bump_version, bump_version_method),
     ]
 
     @pytest.mark.parametrize('params', map(lambda x: x[0], test_data))
