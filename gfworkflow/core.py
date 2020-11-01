@@ -1,9 +1,15 @@
-import subprocess
+import re
+import subprocess as sp
 from typing import Union, List
+
+from gfworkflow.exceptions import RunCommandException
 
 
 def run(command: Union[str, List[str]]):
-    return subprocess.run(command)
+    completed_process = sp.run(command, stdout=sp.PIPE, stderr=sp.PIPE, universal_newlines=True)
+    if completed_process.returncode:
+        raise RunCommandException(completed_process)
+    return completed_process
 
 
 def init():
@@ -13,3 +19,12 @@ def init():
 
 def bump_version(part: str):
     run(f'bumpversion {part}')
+
+
+def start_release(new_version: str):
+    run(f'git flow release start {new_version}')
+
+
+def get_new_version(part: str):
+    output = run(f'bumpversion {part} --list -n --allow-dirty --no-configured-files').stdout
+    return re.compile(r'new_version=(\S+)').search(output).group(1)

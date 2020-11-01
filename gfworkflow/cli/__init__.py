@@ -17,13 +17,19 @@ def _cli_callable_from_params(params: List[str] = None) -> callable:
         return api.clear_log_method
 
     if args.dump_log:
-        return partial(api.dump_log_method, args.dump_log)
+        dst = args.dump_log
+        return partial(api.dump_log_method, dst)
 
     if args.init:
         return api.init_method
 
     if args.bump_version:
-        return partial(api.bump_version_method, args.bump_version)
+        part = args.bump_version
+        return partial(api.bump_version_method, part)
+
+    if args.start_release:
+        part = args.start_release
+        return partial(api.start_release_method, part)
 
     return lambda: None
 

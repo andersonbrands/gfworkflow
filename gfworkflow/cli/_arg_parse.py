@@ -34,6 +34,8 @@ class Args(object):
 
         parser.add_argument(R.param.bump_version, metavar='part', help=R.param.bump_version_help)
 
+        parser.add_argument(R.param.start_release, metavar='part', help=R.param.start_release_help)
+
         self._args: argparse.Namespace = parser.parse_args(args_list)
 
     @property
@@ -53,5 +55,9 @@ class Args(object):
         return self._args.init
 
     @property
-    def bump_version(self) -> bool:
+    def bump_version(self) -> str:
         return self._args.bump_version
+
+    @property
+    def start_release(self) -> str:
+        return self._args.start_release

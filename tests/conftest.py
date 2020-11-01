@@ -9,6 +9,6 @@ def tmp_path_as_cwd(tmp_path: Path):
     cwd = os.getcwd()
     os.chdir(tmp_path)
     try:
-        yield
+        yield tmp_path
     finally:
         os.chdir(cwd)
