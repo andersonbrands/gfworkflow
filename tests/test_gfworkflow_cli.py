@@ -7,8 +7,7 @@ from unittest.mock import Mock
 import pytest
 
 from gfworkflow import R, logger
-from gfworkflow.cli import Args, _cli_callable_from_params, cli
-from gfworkflow.cli.api import version_method, clear_log_method, dump_log_method, init_method, bump_version_method
+from gfworkflow.cli import Args, _cli_callable_from_params, cli, api
 
 
 def test_cli_callable_from_params_with_no_param_returns_working_callable():
@@ -41,11 +40,12 @@ def test_cli_uses_logger_handler():
 
 class TestArgs:
     test_data = [
-        (['--version'], Args.version, version_method),
-        (['--clear-log'], Args.clear_log, clear_log_method),
-        (['--dump-log', '.'], Args.dump_log, dump_log_method),
-        (['--init'], Args.init, init_method),
-        (['--bump-version', 'minor'], Args.bump_version, bump_version_method),
+        (['--version'], Args.version, api.version_method),
+        (['--clear-log'], Args.clear_log, api.clear_log_method),
+        (['--dump-log', '.'], Args.dump_log, api.dump_log_method),
+        (['--init'], Args.init, api.init_method),
+        (['--bump-version', 'minor'], Args.bump_version, api.bump_version_method),
+        (['--start-release', 'minor'], Args.start_release, api.start_release_method),
     ]
 
     @pytest.mark.parametrize('params', map(lambda x: x[0], test_data))

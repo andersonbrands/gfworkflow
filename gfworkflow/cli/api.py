@@ -24,3 +24,9 @@ def init_method():
 
 def bump_version_method(part: str):
     core.bump_version(part)
+
+
+def start_release_method(part: str):
+    new_version = core.get_new_version(part)
+    core.start_release(new_version)
+    pass
