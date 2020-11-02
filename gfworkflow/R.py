@@ -18,4 +18,6 @@ class param(base.param):
     start_release_help = 'starts a release'
     finish_release = '--finish-release'
     finish_release_help = 'finishes a release'
+    bump_release = '--bump-release'
+    bump_release_help = 'bumps a release'
     pass

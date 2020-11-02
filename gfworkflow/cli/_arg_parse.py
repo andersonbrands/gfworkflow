@@ -38,6 +38,8 @@ class Args(object):
 
         parser.add_argument(R.param.finish_release, action='store_true', help=R.param.finish_release_help)
 
+        parser.add_argument(R.param.bump_release, action='store_true', help=R.param.bump_release_help)
+
         self._args: argparse.Namespace = parser.parse_args(args_list)
 
     @property
@@ -67,3 +69,7 @@ class Args(object):
     @property
     def finish_release(self):
         return self._args.finish_release
+
+    @property
+    def bump_release(self):
+        return self._args.bump_release
