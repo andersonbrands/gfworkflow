@@ -47,6 +47,7 @@ class TestArgs:
         (['--bump-version', 'minor'], Args.bump_version, api.bump_version_method),
         (['--start-release', 'minor'], Args.start_release, api.start_release_method),
         (['--finish-release'], Args.finish_release, api.finish_release_method),
+        (['--bump-release'], Args.bump_release, api.bump_release_method),
     ]
 
     @pytest.mark.parametrize('params', map(lambda x: x[0], test_data))
