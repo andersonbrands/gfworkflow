@@ -16,4 +16,6 @@ class param(base.param):
     bump_version_help = 'bumps version'
     start_release = '--start-release'
     start_release_help = 'starts a release'
+    finish_release = '--finish-release'
+    finish_release_help = 'finishes a release'
     pass

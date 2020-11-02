@@ -36,6 +36,8 @@ class Args(object):
 
         parser.add_argument(R.param.start_release, metavar='part', help=R.param.start_release_help)
 
+        parser.add_argument(R.param.finish_release, action='store_true', help=R.param.finish_release_help)
+
         self._args: argparse.Namespace = parser.parse_args(args_list)
 
     @property
@@ -61,3 +63,7 @@ class Args(object):
     @property
     def start_release(self) -> str:
         return self._args.start_release
+
+    @property
+    def finish_release(self):
+        return self._args.finish_release
