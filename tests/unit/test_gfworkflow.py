@@ -1,10 +1,11 @@
 import logging
 from pathlib import Path
+from unittest import mock
 
 import pytest
 
-from gfworkflow import R, logger, clear_log, dump_log
-from gfworkflow.__main__ import main
+from gfworkflow import R, logger, clear_log, dump_log, logger_handler
+from gfworkflow.__main__ import main, _create_file_handler
 
 
 @pytest.fixture
@@ -45,9 +46,12 @@ def test_package_path_directory_name_matches_package_name():
     assert package_path_directory_name == R.string.package_name
 
 
-def test_main_adds_file_handler_to_logger():
-    main()
-    assert logging.FileHandler in map(type, logger.handlers)
+def test_main_uses_logger_handler():
+    with mock.patch('gfworkflow.__main__.logger_handler') as logger_handler_:
+        with mock.patch('gfworkflow.__main__._create_file_handler') as _create_file_handler_:
+            _create_file_handler_.return_value = logging.NullHandler
+            main()
+        logger_handler_.assert_called_once()
 
 
 def test_clear_log():
@@ -55,7 +59,13 @@ def test_clear_log():
     assert not R.path.log_file.exists()
 
 
-def test_dump_log(tmp_path: Path):
-    dump_log(tmp_path)
+def test_dump_existing_log(tmp_path: Path):
+    with logger_handler(logger, _create_file_handler()):
+        dump_log(tmp_path)
     dumped_log_file: Path = tmp_path / R.string.log_file_name
     assert dumped_log_file.exists()
+
+
+def test_dump_non_existing_log(tmp_path: Path):
+    clear_log()
+    dump_log(tmp_path)

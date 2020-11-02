@@ -8,9 +8,9 @@ class string:
     package_path = pkg_resources.resource_filename(package_name, '')
     res_folder_name: str = 'res'
     res_folder_path = pkg_resources.resource_filename(package_name, res_folder_name)
-    version: str = 'version: 0.0.0'.replace('version: ', '')
+    version: str = 'version: 0.1.0'.replace('version: ', '')
     program_name: str = 'gfworkflow'
-    program_name_cli: str = 'gf-workflow'
+    program_name_cli: str = 'gfworkflow'
     program_description: str = ''
     log_file_name: str = f'{package_name}.log'
 

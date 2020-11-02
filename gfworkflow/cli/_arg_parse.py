@@ -30,6 +30,16 @@ class Args(object):
 
         parser.add_argument(R.param.clear_log, action='store_true', help=R.param.clear_log_help)
 
+        parser.add_argument(R.param.init, action='store_true', help=R.param.init_help)
+
+        parser.add_argument(R.param.bump_version, metavar='part', help=R.param.bump_version_help)
+
+        parser.add_argument(R.param.start_release, metavar='part', help=R.param.start_release_help)
+
+        parser.add_argument(R.param.finish_release, action='store_true', help=R.param.finish_release_help)
+
+        parser.add_argument(R.param.bump_release, metavar='part', help=R.param.bump_release_help)
+
         self._args: argparse.Namespace = parser.parse_args(args_list)
 
     @property
@@ -43,3 +53,23 @@ class Args(object):
     @property
     def clear_log(self) -> bool:
         return self._args.clear_log
+
+    @property
+    def init(self) -> bool:
+        return self._args.init
+
+    @property
+    def bump_version(self) -> str:
+        return self._args.bump_version
+
+    @property
+    def start_release(self) -> str:
+        return self._args.start_release
+
+    @property
+    def finish_release(self):
+        return self._args.finish_release
+
+    @property
+    def bump_release(self):
+        return self._args.bump_release
