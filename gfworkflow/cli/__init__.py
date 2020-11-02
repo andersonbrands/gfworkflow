@@ -35,7 +35,8 @@ def _cli_callable_from_params(params: List[str] = None) -> callable:
         return api.finish_release_method
 
     if args.bump_release:
-        return api.bump_release_method
+        part = args.bump_release
+        return partial(api.bump_release_method, part)
 
     return lambda: None
 

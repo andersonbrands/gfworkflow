@@ -37,5 +37,8 @@ def finish_release_method():
     core.finish_release(release_name)
 
 
-def bump_release_method():
-    pass
+def bump_release_method(part: str):
+    new_version = core.get_new_version(part)
+    core.start_release(new_version)
+    core.bump_version(part)
+    core.finish_release(new_version)
