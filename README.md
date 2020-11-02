@@ -74,4 +74,4 @@ python workflow --bump-release {part}
 > **part** must be _major_, _minor_, _patch_ or custom part
 
 
-### v0.1.0-dev
+### v0.1.0
