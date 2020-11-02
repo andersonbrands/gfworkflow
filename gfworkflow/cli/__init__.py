@@ -31,6 +31,9 @@ def _cli_callable_from_params(params: List[str] = None) -> callable:
         part = args.start_release
         return partial(api.start_release_method, part)
 
+    if args.finish_release:
+        return api.finish_release_method
+
     return lambda: None
 
 

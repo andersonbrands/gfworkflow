@@ -30,3 +30,8 @@ def start_release_method(part: str):
     new_version = core.get_new_version(part)
     core.start_release(new_version)
     pass
+
+
+def finish_release_method():
+    release_name = core.get_current_branch_name().replace('release/', '')
+    core.finish_release(release_name)
