@@ -17,6 +17,7 @@ setuptools.setup(
     description='A set of wrappers around git flow',
     long_description=readme.read_text(),
     long_description_content_type="text/markdown",
+    url='https://github.com/andersonbrands/gfworkflow',
     packages=setuptools.find_packages(),
     package_data={'gfworkflow': ['gfworkflow/res/*']},
     include_package_data=True,
