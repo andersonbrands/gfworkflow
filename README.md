@@ -1,14 +1,14 @@
-# gf-workflow
+# gfworkflow
 A set of wrappers around git flow and [bump2version](https://github.com/c4urself/bump2version).
 
 ## Installation
-You can use [pipx](https://pipxproject.github.io/pipx/) and have **gf-workflow** available via command line
+You can use [pipx](https://pipxproject.github.io/pipx/) and have **gfworkflow** available via command line
 ```
-pipx install gf-workflow
+pipx install gfworkflow
 ```
 If you prefer you can also use pip:
 ```
-pip install gf-workflow
+pip install gfworkflow
 ```
 
 > **Please note, bumping version is achieved through [bump2version](https://github.com/c4urself/bump2version), so make sure it is available via command line**
@@ -18,7 +18,7 @@ pip install gf-workflow
 #### Init git flow
 Initializes git flow with default configuration, and adds **v** as version tag prefix
 ```
-gf-workflow --init
+gfworkflow --init
 ```
 ... which is equivalent to:
 ```
@@ -28,7 +28,7 @@ git config gitflow.prefix.versiontag v
 #### Bump version
 Bumps current version
 ```
-gf-workflow --bump-version {part}
+gfworkflow --bump-version {part}
 ```
 > **part** must be _major_, _minor_, _patch_ or custom part
 
@@ -40,7 +40,7 @@ bumpversion {part}
 #### Start release
 Starts a new release
 ```
-gf-workflow --start-release {part}
+gfworkflow --start-release {part}
 ```
 > **part** must be _major_, _minor_, _patch_ or custom part
 
@@ -54,7 +54,7 @@ git flow release start {new_version}
 #### Finish release
 Finishes a release
 ```
-gf-workflow --finish-release
+gfworkflow --finish-release
 ```
 ... which is equivalent to:
 ```
