@@ -33,4 +33,5 @@ def start_release_method(part: str):
 
 
 def finish_release_method():
-    pass
+    release_name = core.get_current_branch_name().replace('release/', '')
+    core.finish_release(release_name)

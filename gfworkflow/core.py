@@ -32,3 +32,7 @@ def get_new_version(part: str):
 
 def get_current_branch_name():
     return run('git rev-parse --abbrev-ref HEAD').stdout.strip()
+
+
+def finish_release(release_name):
+    run(f'git flow release finish -m " - " {release_name}')

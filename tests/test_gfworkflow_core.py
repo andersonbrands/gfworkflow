@@ -66,3 +66,10 @@ def test_get_current_branch_name(tmp_path_as_cwd):
     core.run('git commit -m "Add"')
     core.run('git checkout -b develop')
     assert 'develop' == core.get_current_branch_name()
+
+
+def test_finish_release():
+    with mock.patch('gfworkflow.core.run') as run:
+        run: MagicMock
+        core.finish_release('0.0.0')
+        run.assert_called_once_with('git flow release finish -m " - " 0.0.0')
