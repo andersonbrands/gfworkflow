@@ -63,7 +63,7 @@ class TestArgs:
         assert api_method == callable_ or api_method == callable_.func
 
     def test_unrecognized_arguments_raises_system_exit(self):
-        with pytest.raises(SystemExit):
+        with pytest.raises(SystemExit), mock.patch('sys.stderr'):
             Args(['--foo'])
 
     def test_args_dump_log_is_not_none_when_dump_log_dir_in_args_list(self):
@@ -76,7 +76,7 @@ class TestArgs:
         assert Args(params).dump_log == cwd
 
     def test_non_existing_dir_raises_argument_type_error(self, tmp_path_as_cwd):
-        with pytest.raises(SystemExit), pytest.raises(argparse.ArgumentTypeError):
+        with pytest.raises(SystemExit), pytest.raises(argparse.ArgumentTypeError), mock.patch('sys.stderr'):
             params = ['--dump-log', 'non_existing_dir']
             Args(params)
 
