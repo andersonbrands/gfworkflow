@@ -14,14 +14,15 @@ setuptools.setup(
     version=package_res_version.read_text(),
     author='Anderson Brandao',
     author_email='anderson.brands@gmail.com',
-    description='',
+    description='A set of wrappers around git flow',
     long_description=readme.read_text(),
     long_description_content_type="text/markdown",
     packages=setuptools.find_packages(),
     package_data={'gfworkflow': ['gfworkflow/res/*']},
     include_package_data=True,
     entry_points={
-        'console_scripts': ['gf-workflow=gfworkflow.__main__:console_script_entry']
+        'console_scripts': ['gfworkflow=gfworkflow.__main__:console_script_entry',
+                            'gfwf=gfworkflow.__main__:console_script_entry']
     },
     classifiers=[
         'Programming Language :: Python :: 3',
